@@ -1,0 +1,27 @@
+{
+  "name": "cours",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve",
+    "screenshots": "node scripts/screenshots.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwolff/cours.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nwolff/cours/issues"
+  },
+  "homepage": "https://github.com/nwolff/cours#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.5",
+    "playwright": "^1.59.1"
+  }
+}
