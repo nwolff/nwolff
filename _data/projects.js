@@ -16,10 +16,11 @@ export default async function () {
   const repos = await res.json();
 
   return repos
-    .filter(r => r.name.startsWith('cours-'))
-    .filter(r => r.homepage?.trim()) // exclure les projets sans site web public
-    .filter(r => !r.topics.includes('unlisted'))
+    .filter(r => r.topics.some(t => t.startsWith('index-rank-')))
+    .filter(r => r.homepage?.trim())
     .map(r => {
+      const rankTag = r.topics.find(t => t.startsWith('index-rank-'));
+      const rank = parseInt(rankTag.split('-').at(-1), 10);
       return {
         name: displayNames[r.name] || r.name.replace(/^cours-/, ''),
         description: r.description || '',
@@ -27,7 +28,9 @@ export default async function () {
         repo: r.html_url,
         screenshot: `https://raw.githubusercontent.com/nwolff/${r.name}/main/screenshot.png`,
         updated: r.pushed_at,
-        topics: r.topics.filter(t => t !== 'unlisted'),
+        topics: r.topics.filter(t => !t.startsWith('index-rank-')),
+        rank,
       };
-    });
+    })
+    .sort((a, b) => a.rank - b.rank);
 }

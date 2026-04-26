@@ -1,31 +1,32 @@
 # cours
 
-Landing page listing all teaching projects, with descriptions, screenshots, and links.
+Page d'accueil listant tous les projets pédagogiques, avec descriptions, captures d'écran et liens.
 
-Built with [Eleventy](https://www.11ty.dev/) and automatically deployed to https://cours.nwolff.info/ on every push to main.
+Construit avec [Eleventy](https://www.11ty.dev/) et déployé automatiquement sur https://cours.nwolff.info/ à chaque push sur main.
 
-## Run locally
+## Lancer en local
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open http://localhost:8080.
+Puis ouvrir http://localhost:8080.
 
-## How it works
+## Fonctionnement
 
-Project data is fetched live from the GitHub API at build time (`_data/projects.js`). Any repo that meets all three conditions appears on the page automatically:
+Les données des projets sont récupérées en direct depuis l'API GitHub au moment du build (`_data/projects.js`). Un dépôt apparaît sur la page s'il remplit les deux conditions suivantes :
 
-1. The repo name starts with `cours-`
-2. A homepage URL is set on the repo
-3. The repo does not have the `unlisted` topic
+1. Il possède un topic de la forme `index-rank-N` (ex. `index-rank-3`)
+2. Une URL de site web est renseignée sur le dépôt
 
-The description and homepage URL come from the GitHub repo metadata. No manual data file to maintain.
+Le numéro de rang détermine l'ordre d'affichage — les valeurs les plus basses apparaissent en premier. Le tag `index-rank-N` est retiré de la liste des badges affichés sur la carte.
 
-## Display names
+La description et l'URL du site proviennent des métadonnées du dépôt GitHub. Aucun fichier de données à maintenir manuellement.
 
-By default the repo name is shown with `cours-` stripped (e.g. `cours-web` → `web`). To override with a prettier name, add an entry to [`_data/display-names.json`](_data/display-names.json):
+## Noms d'affichage
+
+Par défaut, le nom du dépôt est affiché sans le préfixe `cours-` (ex. `cours-web` → `web`). Pour utiliser un nom plus lisible, ajouter une entrée dans [`_data/display-names.json`](_data/display-names.json) :
 
 ```json
 {
@@ -33,14 +34,14 @@ By default the repo name is shown with `cours-` stripped (e.g. `cours-web` → `
 }
 ```
 
-## Screenshots
+## Captures d'écran
 
-Each project repo stores its own `screenshot.png` at the root. Commit one to a project repo and it will appear on the landing page automatically — no rebuild needed, it's hotlinked directly.
+Chaque dépôt de projet stocke son propre fichier `screenshot.png` à la racine. Il suffit d'en ajouter un dans un dépôt pour qu'il apparaisse automatiquement sur la page — aucun rebuild nécessaire, l'image est liée directement.
 
-## Setting GitHub repo metadata
+## Métadonnées GitHub
 
-Each repo needs a **description** and **homepage URL** set in GitHub (Settings → General). These are the values shown on the landing page.
+Chaque dépôt doit avoir une **description** et une **URL de site web** renseignées sur GitHub (Paramètres → Général). Ce sont ces valeurs qui s'affichent sur la page.
 
-## Hiding a repo
+## Ajouter un dépôt à l'index
 
-Add the `unlisted` topic to a GitHub repo to exclude it from the page without deleting it.
+Ajouter le topic `index-rank-N` (remplacer `N` par un entier positif) sur un dépôt GitHub et renseigner son URL de site web. La page est reconstruite à chaque push sur main.
